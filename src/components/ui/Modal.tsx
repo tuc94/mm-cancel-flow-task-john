@@ -2,6 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import Image from "next/image";
+import React from "react";
 import { useId } from "react";
 
 // --- Reusable Modal primitive (Radix + Tailwind) ---
