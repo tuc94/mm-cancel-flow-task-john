@@ -368,7 +368,9 @@ export default function ProfilePage() {
                     </button>
                     <button
                       onClick={() => {
-                        console.log("Cancel button clicked - no action");
+                        // ⬇️ Open cancel flow
+                        setFlowStep("found");
+                        setIsCancelOpen(true);
                       }}
                       className="inline-flex items-center justify-center w-full px-4 py-3 bg-white border border-red-200 text-red-600 rounded-lg hover:bg-red-50 hover:border-red-300 transition-all duration-200 shadow-sm group"
                     >
@@ -397,6 +399,72 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+      <Modal
+        open={isCancelOpen}
+        onOpenChange={setIsCancelOpen}
+        title="Subscription Cancellation"
+      >
+        {flowStep === "found" && (
+          <FoundJobStep
+            onAnswer={(ans) => {
+              console.log("found-step answer:", ans);
+              // TODO: optionally persist this to Supabase
+              setFlowStep("reason"); // or branch based on ans
+            }}
+            imageSrc="/empire-state-compressed.jpg" // ensure this exists in /public/images
+          />
+        )}
+
+        {flowStep === "reason" && (
+          <div className="md:col-span-2">
+            <p className="text-sm text-gray-700">Reason step goes here…</p>
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() => setFlowStep("downsell")}
+                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Continue
+              </button>
+              <button
+                onClick={() => setIsCancelOpen(false)}
+                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
+        {flowStep === "downsell" && (
+          <div className="md:col-span-2">
+            <p className="text-sm text-gray-700">Downsell step goes here…</p>
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() => setFlowStep("confirm")}
+                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Accept / Decline (continue)
+              </button>
+            </div>
+          </div>
+        )}
+
+        {flowStep === "confirm" && (
+          <div className="md:col-span-2">
+            <p className="text-sm text-gray-700">
+              Final confirmation goes here…
+            </p>
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() => setIsCancelOpen(false)}
+                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Finish
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
