@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import FlowShell from '@/app/cancel/_components/FlowShell';
 // reuse your FieldGroup/segmented UI from before (or inline)
 
-export default function FoundJobPage() {
+export default function FoundYesJobPage() {
   const router = useRouter();
 
   return (

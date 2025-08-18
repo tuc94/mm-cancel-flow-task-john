@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 
-import { Modal } from "@/components/ui/Modal";
-import {Found}
+import { Modal, FoundJobStep } from "@/components/ui/Modal";
 const mockUser = {
   email: "user@example.com",
   id: "1",
@@ -404,8 +403,8 @@ export default function ProfilePage() {
         onOpenChange={setIsCancelOpen}
         title="Subscription Cancellation"
       >
-        {flowStep === "found-yes" && (
-          <FoundJobYesStep
+        {flowStep === "found" && (
+          <FoundJobStep
             onBack={() => setFlowStep("found")}
             onContinue={(payload) => {
               // TODO: Persist to Supabase here if desired:
