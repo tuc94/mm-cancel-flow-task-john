@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { Modal } from "@/components/ui/Modal";
-import FoundJobStep from "@/app/cancel/steps/FoundJobStep";
+import {Found}
 const mockUser = {
   email: "user@example.com",
   id: "1",
@@ -404,14 +404,16 @@ export default function ProfilePage() {
         onOpenChange={setIsCancelOpen}
         title="Subscription Cancellation"
       >
-        {flowStep === "found" && (
-          <FoundJobStep
-            onAnswer={(ans) => {
-              console.log("found-step answer:", ans);
-              // TODO: optionally persist this to Supabase
-              setFlowStep("reason"); // or branch based on ans
+        {flowStep === "found-yes" && (
+          <FoundJobYesStep
+            onBack={() => setFlowStep("found")}
+            onContinue={(payload) => {
+              // TODO: Persist to Supabase here if desired:
+              // await supabase.from('cancellations').update({...payload}).eq('id', currentCancellationId)
+              console.log("FoundJobYes payload:", payload);
+              setFlowStep("downsell"); // or whatever the next step is
             }}
-            imageSrc="/empire-state-compressed.jpg" // ensure this exists in /public/images
+            imageSrc="/empire-state-compressed.jpg"
           />
         )}
 
