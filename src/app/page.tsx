@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 
-import { Modal, FoundJobStep } from "@/components/ui/Modal";
+import { Modal } from "@/components/ui/Modal";
+import DownSellPage from "@/app/cancel/downsell/page";
+import FoundYesJobPage from "./cancel/found-job/page";
+import FoundJobStep from "./cancel/steps/FoundJobStep";
 const mockUser = {
   email: "user@example.com",
   id: "1",
@@ -28,7 +31,7 @@ export default function ProfilePage() {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [isCancelOpen, setIsCancelOpen] = useState(false);
   const [flowStep, setFlowStep] = useState<
-    "found" | "reason" | "downsell" | "confirm"
+    "found" | "foundYes" | "reason" | "downsell" | "confirm"
   >("found");
 
   // New state for settings toggle
@@ -405,65 +408,44 @@ export default function ProfilePage() {
       >
         {flowStep === "found" && (
           <FoundJobStep
+            onAnswer={(answer) => {
+              if (answer === "found") {
+                setFlowStep("foundYes"); // go to the yes-branch step
+              } else {
+                setFlowStep("downsell"); // or route to your "searching" branch if you have one
+              }
+            }}
+            mainImageSrc="/empire-state-compressed.jpg"
+          />
+        )}
+
+        {flowStep === "foundYes" && (
+          <FoundYesJobPage
             onBack={() => setFlowStep("found")}
             onContinue={(payload) => {
-              // TODO: Persist to Supabase here if desired:
-              // await supabase.from('cancellations').update({...payload}).eq('id', currentCancellationId)
               console.log("FoundJobYes payload:", payload);
-              setFlowStep("downsell"); // or whatever the next step is
+              // TODO: persist to Supabase here if needed
+              setFlowStep("downsell");
             }}
             imageSrc="/empire-state-compressed.jpg"
           />
         )}
 
-        {flowStep === "reason" && (
-          <div className="md:col-span-2">
-            <p className="text-sm text-gray-700">Reason step goes here…</p>
-            <div className="mt-4 flex gap-2">
-              <button
-                onClick={() => setFlowStep("downsell")}
-                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-50"
-              >
-                Continue
-              </button>
-              <button
-                onClick={() => setIsCancelOpen(false)}
-                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-50"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
-
         {flowStep === "downsell" && (
-          <div className="md:col-span-2">
-            <p className="text-sm text-gray-700">Downsell step goes here…</p>
-            <div className="mt-4 flex gap-2">
-              <button
-                onClick={() => setFlowStep("confirm")}
-                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-50"
-              >
-                Accept / Decline (continue)
-              </button>
-            </div>
-          </div>
+          <DownSellPage
+            currentPeriodEnd={currentPeriodEnd} // Date or ISO string
+            basePrice={25}
+            discountAmount={10} // Variant B: $10 off
+            imageSrc="/empire-state-compressed.jpg"
+            onPrimary={() => setFlowStep("confirm")}
+          />
         )}
 
         {flowStep === "confirm" && (
-          <div className="md:col-span-2">
-            <p className="text-sm text-gray-700">
-              Final confirmation goes here…
-            </p>
-            <div className="mt-4 flex gap-2">
-              <button
-                onClick={() => setIsCancelOpen(false)}
-                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-50"
-              >
-                Finish
-              </button>
-            </div>
-          </div>
+          <ConfirmStep
+            onBack={() => setFlowStep("downsell")}
+            onFinish={() => setOpen(false)}
+          />
         )}
       </Modal>
     </div>

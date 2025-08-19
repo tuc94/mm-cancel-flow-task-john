@@ -6,7 +6,7 @@ import FlowShell from '@/app/cancel/_components/FlowShell';
 const CURRENT_END = new Date(Date.now() + 14*24*60*60*1000); // demo
 const BASE_PRICE = 25;
 
-export default function DownsellPage() {
+export default function DownSellPage() {
   const router = useRouter();
   const discounted = useMemo(() => Math.max(0, BASE_PRICE - 10), []);
 
