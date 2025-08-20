@@ -3,10 +3,10 @@ import Image from "next/image";
 
 export default function FoundJobStep({
   onAnswer,
-  imageSrc = "/empire-state-compressed.jpg",
+  mainImageSrc = "/empire-state-compressed.jpg",
 }: {
   onAnswer: (a: "found" | "searching") => void;
-  imageSrc?: string;
+  mainImageSrc?: string;
 }) {
   return (
     <>
@@ -44,7 +44,7 @@ export default function FoundJobStep({
       <div className="md:pl-2">
         <div className="relative h-56 w-full overflow-hidden rounded-xl md:h-full">
           <Image
-            src={imageSrc}
+            src={mainImageSrc}
             alt="City skyline"
             fill
             className="object-cover"

@@ -436,19 +436,13 @@ export default function ProfilePage() {
         {flowStep === "downsell" && (
           <DownSellPage
             onBack={() => setFlowStep("found")}
-            onContinue={(payload) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onContinue={(payload: any) => {
               console.log("FoundJobYes payload:", payload);
               // TODO: persist to Supabase here if needed
               setFlowStep("downsell");
             }}
             imageSrc="/empire-state-compressed.jpg"
-          />
-        )}
-
-        {flowStep === "confirm" && (
-          <ConfirmStep
-            onBack={() => setFlowStep("downsell")}
-            onFinish={() => setOpen(false)}
           />
         )}
       </Modal>

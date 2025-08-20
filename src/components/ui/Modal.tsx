@@ -7,7 +7,6 @@ import React, { useId } from "react";
 export function Modal({
   open,
   onOpenChange,
-  title = "Subscription Cancellation",
   description,
   children,
   size = "2xl",
@@ -47,9 +46,6 @@ export function Modal({
             data-[state=open]:animate-[contentShow_180ms_cubic-bezier(0.16,1,0.3,1)]
             data-[state=closed]:animate-[contentHide_130ms_cubic-bezier(0.16,1,0.3,1)]`}
         >
-          {/* IMPORTANT: keep these two as real Radix elements, no `asChild` */}
-          <Dialog.Title id={titleId}>_debug title_</Dialog.Title>
-
           {description && (
             <Dialog.Description id={descId}>
               <VisuallyHidden>{description}</VisuallyHidden>
@@ -61,7 +57,6 @@ export function Modal({
             className="sticky top-0 z-10 flex items-center justify-between border-b border-black/10
                           bg-white/80 px-5 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/60 sm:px-6 lg:px-8"
           >
-            <div className="text-sm font-medium text-gray-800">{title}</div>
             <Dialog.Close
               aria-label="Close"
               className="rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-300"
