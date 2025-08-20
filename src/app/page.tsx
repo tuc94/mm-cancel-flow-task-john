@@ -435,11 +435,13 @@ export default function ProfilePage() {
 
         {flowStep === "downsell" && (
           <DownSellPage
-            currentPeriodEnd={currentPeriodEnd} // Date or ISO string
-            basePrice={25}
-            discountAmount={10}
+            onBack={() => setFlowStep("found")}
+            onContinue={(payload) => {
+              console.log("FoundJobYes payload:", payload);
+              // TODO: persist to Supabase here if needed
+              setFlowStep("downsell");
+            }}
             imageSrc="/empire-state-compressed.jpg"
-            onPrimary={() => setFlowStep("confirm")}
           />
         )}
 
