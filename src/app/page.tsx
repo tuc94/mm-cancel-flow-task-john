@@ -34,6 +34,8 @@ export default function ProfilePage() {
     "found" | "foundYes" | "reason" | "downsell" | "confirm"
   >("found");
 
+  console.log(flowStep, "its a great day to be alive");
+
   // New state for settings toggle
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
 
@@ -435,7 +437,7 @@ export default function ProfilePage() {
           <DownSellPage
             currentPeriodEnd={currentPeriodEnd} // Date or ISO string
             basePrice={25}
-            discountAmount={10} // Variant B: $10 off
+            discountAmount={10}
             imageSrc="/empire-state-compressed.jpg"
             onPrimary={() => setFlowStep("confirm")}
           />
